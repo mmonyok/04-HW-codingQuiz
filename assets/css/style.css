@@ -1,0 +1,29 @@
+body {
+    display: block;
+}
+
+/* Header section */
+header {
+    display: inline;
+    position: fixed;
+}
+
+#highscore {
+    float: left;
+}
+
+#timer {
+    float: right;
+    line-height: 1.15;
+}
+
+/* Main */
+
+main {
+
+}
+
+#questionsAnswers {
+    display: none;
+}
+
