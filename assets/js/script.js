@@ -14,17 +14,19 @@ let finalScoreEl = document.getElementById("finalScore");
 let secondsLeft = 60;
 let i = 0;
 
+
+
 // My array of questions and their respective answers.
 let questionsArray =
-    [{ question: "What is my favorite color", option1: "Blue", option2: "yellow", option3: "red", answer: "green" },
+    [{ question: "What is my favorite color", options: ["Blue", "yellow", "red", "green"], answer: "green"},
 
-    { question: "Which of the below is not a type of JavaScript variable?", option1: "Boolean", option2: "String", option3: "Int", answer: "Rope" },
+    { question: "Which of the below is not a type of JavaScript variable?", options: ["Boolean", "String", "Int", "Rope"], answer: "Rope" },
 
-    { question: "Which is considered to be a 3rd party API?", option1: "HTML", option2: "JavaScript", option3: "CSS", answer: "Bootstrap" },
+    { question: "Which is considered to be a 3rd party API?", options: ["HTML", "JavaScript", "CSS", "Bootstrap"], answer: "Bootstrap" },
 
-    { question: "Which piece of code will allow you to 'read' its argument?", option1: "setInterval()", option2: "document.querySelector()", option3: "object{}", answer: "console.log()" },
+    { question: "Which piece of code will allow you to 'read' its argument?", options: ["setInterval()", "document.querySelector()", "object{}", "console.log()"], answer: "console.log()" },
 
-    { question: "Which is the order of broadest to narrowest CSS selectors?", option1: ".class, #id, element, *", option2: "element, .class, #id, *", option3: "#id, .class, element, *", answer: "*, element, .class, #id" }];
+    { question: "Which is the order of broadest to narrowest CSS selectors?", options: [".class, #id, element, *", "element, .class, #id, *", "#id, .class, element, *", "*, element, .class, #id"], answer: "*, element, .class, #id" }];
 
 //This function will include a countdown from 60
 function timer() {
@@ -32,7 +34,7 @@ function timer() {
         secondsLeft--;
         timeEl.textContent = secondsLeft + " Seconds Left"
 
-        if (secondsLeft === 0) {
+        if (secondsLeft < 0) {
             // Stops timer from counting down.
             clearInterval(timerInterval);
             // Calls end of quiz screen.
@@ -65,58 +67,70 @@ function gameLost() {
 function buildQuiz() {
 
     document.querySelector("#question").textContent = questionsArray[i].question;
-    document.querySelector("#answer1").textContent = questionsArray[i].option1;
-    document.querySelector("#answer2").textContent = questionsArray[i].option2;
-    document.querySelector("#answer3").textContent = questionsArray[i].option3;
-    document.querySelector("#answer4").textContent = questionsArray[i].answer;
+    document.querySelector("#answer1").textContent = questionsArray[i].options[0];
+    document.querySelector("#answer2").textContent = questionsArray[i].options[1];
+    document.querySelector("#answer3").textContent = questionsArray[i].options[2];
+    document.querySelector("#answer4").textContent = questionsArray[i].options[3];
 
     timer();
 };
-
+console.log(button1);
 button1.addEventListener("click", function () {
-    if (questionsArray[i].answer) {
+    if (button1.textContent === questionsArray[i].answer) {
         resultEl.textContent = "Correct Answer!";
         i++;
         buildQuiz();
     } else {
         resultEl.textContent = "Wrong Answer. Try Again.";
         secondsLeft -= 5;
+        if (secondsLeft < 0) {
+            timeEl = 0;
+        }
     }
     return;
 });
 
 button2.addEventListener("click", function () {
-    if (questionsArray[i].answer) {
+    if (button2.textContent === questionsArray[i].answer) {
         resultEl.textContent = "Correct Answer!"
         i++;
         buildQuiz();
     } else {
         resultEl.textContent = "Wrong Answer. Try Again."
         secondsLeft -= 5;
+        if (secondsLeft < 0) {
+            timeEl = 0;
+        }
     }
     return;
 });
 
 button3.addEventListener("click", function () {
-    if (questionsArray[i].answer) {
+    if (button3.textContent === questionsArray[i].answer) {
         resultEl.textContent = "Correct Answer!"
         i++;
         buildQuiz();
     } else {
         resultEl.textContent = "Wrong Answer. Try Again."
         secondsLeft -= 5;
+        if (secondsLeft < 0) {
+            timeEl = 0;
+        }
     }
     return;
 });
 
 button4.addEventListener("click", function () {
-    if (questionsArray[i].answer) {
+    if (button4.textContent === questionsArray[i].answer) {
         resultEl.textContent = "Correct Answer!"
         i++;
         buildQuiz();
     } else {
         resultEl.textContent = "Wrong Answer. Try Again."
         secondsLeft -= 5;
+        if (secondsLeft < 0) {
+            timeEl = 0;
+        }
     }
     return;
 });
