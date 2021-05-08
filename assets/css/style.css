@@ -39,6 +39,16 @@ main {
     display: block;
 }
 
+#finalScore {
+    margin: 10px 0;
+}
+
+#gameEnd {
+    margin: 10% 38%;
+    text-align: left;
+    display: block;
+}
+
 #questionsAnswers {
     margin: 10% 25%;
     text-align: center;
@@ -52,5 +62,6 @@ main {
 #welcome {
     margin: 10% 25%;
     text-align: center;
+    display: none;
 }
 
