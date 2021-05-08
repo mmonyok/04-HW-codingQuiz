@@ -1,29 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     display: block;
 }
 
 /* Header section */
 header {
-    display: inline;
-    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 #highscore {
-    float: left;
+    margin: 10px;
 }
 
 #timer {
-    float: right;
-    line-height: 1.15;
+    margin: 10px;
 }
 
 /* Main */
+button {
+    margin-top: 10px;
+}
+
+hr {
+    margin: 10px 0;
+}
 
 main {
 
 }
 
+.block {
+    display: block;
+}
+
 #questionsAnswers {
+    margin: 10% 25%;
+    text-align: center;
     display: none;
+}
+
+#startButton {
+
+}
+
+#welcome {
+    margin: 10% 25%;
+    text-align: center;
 }
 
