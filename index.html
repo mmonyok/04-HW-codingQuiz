@@ -28,16 +28,20 @@
             <button class="block" id="answer3"></button>
             <button class="block" id="answer4"></button>
             <hr>
-            <p id="result">Correct</p>
+            <p id="result"></p>
         </section>
-        <section id="gameEnd">
-            <h2 id="#endMessage"></h2>
+        <section class="gameEnd" id="gameWon">
+            <h2>You've Won! &#128513</h2>
             <p id="finalScore"></p>
-            <form>
+            <form id="submitForm">
                 <label>Enter Initials:</label>
                 <input>
                 <button>Submit</button>
             </form>
+        </section>
+        <section id="gameLost">
+            <h2>You've Run Out of Time! &#128557</h2>
+            <button id="tryAgain">Try Again?</button>
         </section>
     </main>
     <script src="assets/js/script.js"></script>

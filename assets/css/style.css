@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    color: black;
 }
 
 body {
@@ -43,16 +44,19 @@ main {
     margin: 10px 0;
 }
 
-#gameEnd {
+#gameLost {
+    margin: 10% 38%;
+    text-align: center;
+}
+
+#gameWon {
     margin: 10% 38%;
     text-align: left;
-    display: none;
 }
 
 #questionsAnswers {
     margin: 10% 25%;
     text-align: center;
-    display: none;
 }
 
 #startButton {
@@ -62,6 +66,5 @@ main {
 #welcome {
     margin: 10% 25%;
     text-align: center;
-    display: block;
 }
 

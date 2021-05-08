@@ -8,73 +8,89 @@ let resultEl = document.getElementById("result");
 let welcomeEl = document.getElementById("welcome");
 let quizEl = document.getElementById("questionsAnswers");
 let startEl = document.getElementById("startButton");
-let gameEndEl = document.getElementById("gameEnd");
+let tryAgainEl = document.getElementById("tryAgain");
+let gameWonEl = document.getElementById("gameWon");
+let gameLostEl = document.getElementById("gameLost");
 let endMessageEl = document.getElementById("endMessage");
 let finalScoreEl = document.getElementById("finalScore");
+let formEl = document.getElementById("submitForm");
 let secondsLeft = 60;
 let i = 0;
+let score = 0;
 
-
+// Sets all the page displays back to the beginning on page reload.
+window.addEventListener("load", function () {
+    welcomeEl.style.display = "block";
+    quizEl.style.display = "none";
+    gameWonEl.style.display = "none";
+    gameLostEl.style.display = "none";
+})
 
 // My array of questions and their respective answers.
 let questionsArray =
-    [{ question: "What is my favorite color", options: ["Blue", "yellow", "red", "green"], answer: "green"},
+    [{question: "What is my favorite color", options: ["Blue", "yellow", "red", "green"], answer: "green" },
 
-    { question: "Which of the below is not a type of JavaScript variable?", options: ["Boolean", "String", "Int", "Rope"], answer: "Rope" },
+    {question: "Which of the below is not a type of JavaScript variable?", options: ["Boolean", "String", "Int", "Rope"], answer: "Rope" },
 
-    { question: "Which is considered to be a 3rd party API?", options: ["HTML", "JavaScript", "CSS", "Bootstrap"], answer: "Bootstrap" },
+    {question: "Which is considered to be a 3rd party API?", options: ["HTML", "JavaScript", "CSS", "Bootstrap"], answer: "Bootstrap" },
 
-    { question: "Which piece of code will allow you to 'read' its argument?", options: ["setInterval()", "document.querySelector()", "object{}", "console.log()"], answer: "console.log()" },
+    {question: "Which piece of code will allow you to 'read' its argument?", options: ["setInterval()", "document.querySelector()", "object{}", "console.log()"], answer: "console.log()" },
 
-    { question: "Which is the order of broadest to narrowest CSS selectors?", options: [".class, #id, element, *", "element, .class, #id, *", "#id, .class, element, *", "*, element, .class, #id"], answer: "*, element, .class, #id" }];
+    {question: "Which is the order of broadest to narrowest CSS selectors?", options: [".class, #id, element, *", "element, .class, #id, *", "#id, .class, element, *", "*, element, .class, #id"], answer: "*, element, .class, #id" }];
 
-//This function will include a countdown from 60
+// This handles everything to do with the timer.
 function timer() {
     let timerInterval = setInterval(function () {
-        secondsLeft--;
-        timeEl.textContent = secondsLeft + " Seconds Left"
-
         if (secondsLeft < 0) {
             // Stops timer from counting down.
             clearInterval(timerInterval);
             // Calls end of quiz screen.
             gameLost();
+        // This will stop the time if the last correct question has been input.  
+        } else if (i === questionsArray.length) {
+            clearInterval(timerInterval);
+            secondsLeft = secondsLeft;
+            score = secondsLeft;
+            finalScoreEl.textContent = "Your final score is " + score;
+        // Just continues the countdown until one of the other if statements becomes true.    
+        } else {
+            secondsLeft--;
+            timeEl.textContent = secondsLeft + " Seconds Left"
         }
     }, 1000);
+    return;
 }
 
 // This function determines what happens when the game is won.
 function gameWin() {
     quizEl.style.display = "none";
-    gameEndEl.style.display = "block";
-    endMessageEl.textContent = "You've Won! &#128513";
+    gameWonEl.style.display = "block";
     // need to get the finalScore variable set up to be equal to the final time left on clock.
-    finalScoreEl.textContent = "Your final score is " + finalScore;
-    //may need to make the form display if it is stuck on no display from the gameLost() function.
+    return;
 }
 
 // This function determines what happens when the game is lost.
 function gameLost() {
     quizEl.style.display = "none";
-    gameEndEl.style.display = "block";
-    endMessageEl.textContent = "You've Lost &#128557";
-    gameEndEl.children[2].style.display = "none";
+    gameLostEl.style.display = "block";
+    return;
 }
 
-// To wipe content add the end of the quiz phase make the questionsAnswers.innerHTML = "" it will set that container to be empty. I think i don't need this since I am styling the display to none.
-
-// This function will hold all of the randomly generated quiz options.
+// This function will hold all of the generated quiz questions and answer options.
 function buildQuiz() {
-
-    document.querySelector("#question").textContent = questionsArray[i].question;
-    document.querySelector("#answer1").textContent = questionsArray[i].options[0];
-    document.querySelector("#answer2").textContent = questionsArray[i].options[1];
-    document.querySelector("#answer3").textContent = questionsArray[i].options[2];
-    document.querySelector("#answer4").textContent = questionsArray[i].options[3];
-
-    timer();
+    if (i === questionsArray.length) {
+        gameWin();
+    } else {
+        document.querySelector("#question").textContent = questionsArray[i].question;
+        document.querySelector("#answer1").textContent = questionsArray[i].options[0];
+        document.querySelector("#answer2").textContent = questionsArray[i].options[1];
+        document.querySelector("#answer3").textContent = questionsArray[i].options[2];
+        document.querySelector("#answer4").textContent = questionsArray[i].options[3];
+    }
+    return;
 };
-console.log(button1);
+
+// These are the buttons, and what happens when you click on their answers.
 button1.addEventListener("click", function () {
     if (button1.textContent === questionsArray[i].answer) {
         resultEl.textContent = "Correct Answer!";
@@ -83,8 +99,8 @@ button1.addEventListener("click", function () {
     } else {
         resultEl.textContent = "Wrong Answer. Try Again.";
         secondsLeft -= 5;
-        if (secondsLeft < 0) {
-            timeEl = 0;
+        if (secondsLeft <= 0) {
+            timeEl.textContent = 0;
         }
     }
     return;
@@ -98,8 +114,8 @@ button2.addEventListener("click", function () {
     } else {
         resultEl.textContent = "Wrong Answer. Try Again."
         secondsLeft -= 5;
-        if (secondsLeft < 0) {
-            timeEl = 0;
+        if (secondsLeft <= 0) {
+            timeEl.textContent = 0;
         }
     }
     return;
@@ -113,8 +129,8 @@ button3.addEventListener("click", function () {
     } else {
         resultEl.textContent = "Wrong Answer. Try Again."
         secondsLeft -= 5;
-        if (secondsLeft < 0) {
-            timeEl = 0;
+        if (secondsLeft <= 0) {
+            timeEl.textContent = 0;
         }
     }
     return;
@@ -124,20 +140,33 @@ button4.addEventListener("click", function () {
     if (button4.textContent === questionsArray[i].answer) {
         resultEl.textContent = "Correct Answer!"
         i++;
+        console.log("i is = to " + i);
         buildQuiz();
     } else {
         resultEl.textContent = "Wrong Answer. Try Again."
         secondsLeft -= 5;
-        if (secondsLeft < 0) {
-            timeEl = 0;
+        if (secondsLeft <= 0) {
+            timeEl.textContent = 0;
         }
     }
     return;
 });
 
-startEl.addEventListener("click", function () {
+// This will reset variables, set current display to the quiz container, start the timer, and generate the first questions for the quiz.
+function startQuiz() {
+    secondsLeft = 60;
+    i = 0;
     welcomeEl.style.display = "none";
     quizEl.style.display = "block";
-    gameEndEl.style.display = "none";
+    gameWonEl.style.display = "none";
+    gameLostEl.style.display = "none";
+    timer();
     buildQuiz();
-});
+    return;
+}
+
+// These are the event listeners for the start quiz and try again buttons.
+startEl.addEventListener("click", startQuiz);
+tryAgainEl.addEventListener("click", startQuiz);
+
+// To wipe content add the end of the quiz phase make the questionsAnswers.innerHTML = "" it will set that container to be empty. I think i don't need this since I am styling the display to none.
