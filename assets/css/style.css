@@ -40,6 +40,10 @@ main {
     display: block;
 }
 
+.button {
+    margin: 10px 5px 0 5px;
+}
+
 #finalScore {
     margin: 10px 0;
 }
@@ -54,13 +58,14 @@ main {
     text-align: left;
 }
 
-#questionsAnswers {
-    margin: 10% 25%;
+#highscoreDiv {
+    margin: 10% 38%;
     text-align: center;
 }
 
-#startButton {
-
+#questionsAnswers {
+    margin: 10% 25%;
+    text-align: center;
 }
 
 #welcome {

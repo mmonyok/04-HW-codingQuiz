@@ -14,6 +14,8 @@ let gameLostEl = document.getElementById("gameLost");
 let endMessageEl = document.getElementById("endMessage");
 let finalScoreEl = document.getElementById("finalScore");
 let formEl = document.getElementById("submitForm");
+let initialsEl = document.getElementById("initials");
+let submitButton = document.getElementById("submitInitials");
 let secondsLeft = 60;
 let i = 0;
 let score = 0;
@@ -28,15 +30,15 @@ window.addEventListener("load", function () {
 
 // My array of questions and their respective answers.
 let questionsArray =
-    [{question: "What is my favorite color", options: ["Blue", "yellow", "red", "green"], answer: "green" },
+    [{ question: "What is my favorite color", options: ["Blue", "yellow", "red", "green"], answer: "green" },
 
-    {question: "Which of the below is not a type of JavaScript variable?", options: ["Boolean", "String", "Int", "Rope"], answer: "Rope" },
+    { question: "Which of the below is not a type of JavaScript variable?", options: ["Boolean", "String", "Int", "Rope"], answer: "Rope" },
 
-    {question: "Which is considered to be a 3rd party API?", options: ["HTML", "JavaScript", "CSS", "Bootstrap"], answer: "Bootstrap" },
+    { question: "Which is considered to be a 3rd party API?", options: ["HTML", "JavaScript", "CSS", "Bootstrap"], answer: "Bootstrap" },
 
-    {question: "Which piece of code will allow you to 'read' its argument?", options: ["setInterval()", "document.querySelector()", "object{}", "console.log()"], answer: "console.log()" },
+    { question: "Which piece of code will allow you to 'read' its argument?", options: ["setInterval()", "document.querySelector()", "object{}", "console.log()"], answer: "console.log()" },
 
-    {question: "Which is the order of broadest to narrowest CSS selectors?", options: [".class, #id, element, *", "element, .class, #id, *", "#id, .class, element, *", "*, element, .class, #id"], answer: "*, element, .class, #id" }];
+    { question: "Which is the order of broadest to narrowest CSS selectors?", options: [".class, #id, element, *", "element, .class, #id, *", "#id, .class, element, *", "*, element, .class, #id"], answer: "*, element, .class, #id" }];
 
 // This handles everything to do with the timer.
 function timer() {
@@ -46,13 +48,10 @@ function timer() {
             clearInterval(timerInterval);
             // Calls end of quiz screen.
             gameLost();
-        // This will stop the time if the last correct question has been input.  
-        } else if (i === questionsArray.length) {
+            // This will stop the time if the last correct question has been input.  
+        } else if (i >= questionsArray.length) {
             clearInterval(timerInterval);
-            secondsLeft = secondsLeft;
-            score = secondsLeft;
-            finalScoreEl.textContent = "Your final score is " + score;
-        // Just continues the countdown until one of the other if statements becomes true.    
+            // Just continues the countdown until one of the other if statements becomes true.    
         } else {
             secondsLeft--;
             timeEl.textContent = secondsLeft + " Seconds Left"
@@ -63,9 +62,10 @@ function timer() {
 
 // This function determines what happens when the game is won.
 function gameWin() {
+    score = secondsLeft;
     quizEl.style.display = "none";
     gameWonEl.style.display = "block";
-    // need to get the finalScore variable set up to be equal to the final time left on clock.
+    finalScoreEl.textContent = "Your final score is " + score;
     return;
 }
 
@@ -165,8 +165,18 @@ function startQuiz() {
     return;
 }
 
+// Handles my high score storing.
+function storeHighScore(event) {
+    event.preventDefault();
+    let initial = initialsEl.value;
+    localStorage.setItem("initials", initial);
+    localStorage.setItem("score", score);
+}
+
 // These are the event listeners for the start quiz and try again buttons.
 startEl.addEventListener("click", startQuiz);
 tryAgainEl.addEventListener("click", startQuiz);
+
+submitButton.addEventListener("click", storeHighScore);
 
 // To wipe content add the end of the quiz phase make the questionsAnswers.innerHTML = "" it will set that container to be empty. I think i don't need this since I am styling the display to none.
