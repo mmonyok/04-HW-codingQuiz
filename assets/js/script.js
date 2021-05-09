@@ -20,6 +20,11 @@ let secondsLeft = 60;
 let i = 0;
 let score = 0;
 
+if (JSON.parse(localStorage.getItem("scoreSet")) === null) {
+    localStorage.setItem("scoreSet", JSON.stringify([]));
+}
+let highestScore = JSON.parse(localStorage.getItem("scoreSet"));
+
 // Sets all the page displays back to the beginning on page reload.
 window.addEventListener("load", function () {
     welcomeEl.style.display = "block";
@@ -30,13 +35,13 @@ window.addEventListener("load", function () {
 
 // My array of questions and their respective answers.
 let questionsArray =
-    [{ question: "What is my favorite color", options: ["Blue", "yellow", "red", "green"], answer: "green" },
+    [{ question: "An array is enclosed with what kind of brackets?", options: ["{}", "[]", "()", "< >", ], answer: "[]" },
 
-    { question: "Which of the below is not a type of JavaScript variable?", options: ["Boolean", "String", "Int", "Rope"], answer: "Rope" },
+    { question: "Which of the below is not a type of JavaScript variable?", options: ["Boolean", "Rope", "String", "Int"], answer: "Rope" },
 
-    { question: "Which is considered to be a 3rd party API?", options: ["HTML", "JavaScript", "CSS", "Bootstrap"], answer: "Bootstrap" },
+    { question: "Which is considered to be a 3rd party API?", options: ["Bootstrap", "HTML", "JavaScript", "CSS"], answer: "Bootstrap" },
 
-    { question: "Which piece of code will allow you to 'read' its argument?", options: ["setInterval()", "document.querySelector()", "object{}", "console.log()"], answer: "console.log()" },
+    { question: "Which piece of code will allow you to 'read' its argument?", options: ["setInterval()", "document.querySelector()", "console.log()", "object{}"], answer: "console.log()" },
 
     { question: "Which is the order of broadest to narrowest CSS selectors?", options: [".class, #id, element, *", "element, .class, #id, *", "#id, .class, element, *", "*, element, .class, #id"], answer: "*, element, .class, #id" }];
 
@@ -169,14 +174,19 @@ function startQuiz() {
 function storeHighScore(event) {
     event.preventDefault();
     let initial = initialsEl.value;
-    localStorage.setItem("initials", initial);
-    localStorage.setItem("score", score);
+    let scoreObject = {
+        "initials": initial,
+        "score": score};
+        console.log(highestScore);
+    highestScore.push(scoreObject);
+    localStorage.setItem("scoreSet", JSON.stringify(highestScore));
+    // This will make the page go to the highscore page once the score is submitted.
+    window.location.href="highScore.html";
 }
 
 // These are the event listeners for the start quiz and try again buttons.
 startEl.addEventListener("click", startQuiz);
 tryAgainEl.addEventListener("click", startQuiz);
 
+// This will submit the score and start the local storage sequence.
 submitButton.addEventListener("click", storeHighScore);
-
-// To wipe content add the end of the quiz phase make the questionsAnswers.innerHTML = "" it will set that container to be empty. I think i don't need this since I am styling the display to none.
